@@ -16,7 +16,6 @@ X[5:,2] = 1
 Y = np.array( [0]*5 + [1]*5 )
 
 W = np.random.randn(D) / np.sqrt(D)  # Gaussian distributed initial weights with mean: 0 & variance: D
-
 etha = 0.001 # Learning rate
 costs = []
 
