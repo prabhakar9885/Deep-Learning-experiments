@@ -1,5 +1,5 @@
 """
-	Neural Net trained on Full data with 
+	Neural Net trained on batch data with 
 	 + L1 regularization and
 	 + Momentum
 """
@@ -56,6 +56,15 @@ def gradient_sigmoid(x):
 	return x * ( 1-x )
 
 
+def relu(x):
+	x[x<0] = 0
+	return x
+
+def gradient_relu(x):
+	x = (x>0) * 1
+	return x
+
+
 def name_to_numbers(T):
 	s = set(T)
 	d = {}
@@ -101,7 +110,7 @@ def main():
 	batch_size = 6000
 	num_of_batches = int(X.shape[0]/batch_size)
 
-	for i in range(100000):
+	for i in range(100):
 		for batch_num in range(num_of_batches):
 			X_batch = X[(batch_num)*batch_size:(batch_num+1)*batch_size]
 			T_batch = t[(batch_num)*batch_size:(batch_num+1)*batch_size]
@@ -119,11 +128,10 @@ def main():
 		z = np.argmax( Z, axis=1 )
 		cost = np.power(T-z ,2).sum()
 
-		if i%100==0:
-			cl_rate = classification_rate(T,z)
-			costs.append( cost )
-			cl_rates.append( cl_rate )
-			print( "{}. Cost:{}  classification_rate:{}".format(i, cost,cl_rate) )
+		cl_rate = classification_rate(T,z)
+		costs.append( cost )
+		cl_rates.append( cl_rate )
+		print( "{}. Cost:{}  classification_rate:{}".format(i, cost,cl_rate) )
 		if cost <= 10e-7:
 			break
 
