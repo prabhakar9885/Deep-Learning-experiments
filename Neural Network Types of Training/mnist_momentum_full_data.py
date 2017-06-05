@@ -103,8 +103,8 @@ def main():
 		Y = sigmoid( net_ji )
 		net_kj = np.dot( Y, w_kj )
 		Z = softmax( net_kj )
-		delta_w_kj = learningRate * Y.T.dot(t-Z) + momentum * delta_w_kj_prev + reg * delta_w_kj
-		delta_w_ji = learningRate * X.T.dot( gradient_sigmoid(Y) * np.dot(t-Z, w_kj.T) ) + momentum * delta_w_ji_prev + reg * delta_w_ji
+		delta_w_kj = learningRate * (Y.T.dot(t-Z) + momentum*delta_w_kj_prev + reg*delta_w_kj)
+		delta_w_ji = learningRate * (X.T.dot( gradient_sigmoid(Y) * np.dot(t-Z, w_kj.T) ) + momentum*delta_w_ji_prev + reg*delta_w_ji)
 		w_kj += delta_w_kj
 		w_ji += delta_w_ji
 		delta_w_kj_prev = delta_w_kj
